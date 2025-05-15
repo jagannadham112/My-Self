@@ -15,7 +15,7 @@
     "shared/**/*.json"
   ],
   "exclude": [
-    "node_modules",
+    "node_modules",bsdjvkjb
     "cdk.out"
   ]
 }
