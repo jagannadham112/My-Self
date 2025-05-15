@@ -1,0 +1,43 @@
+import express, { Request, Response } from 'express';
+import serverless from 'serverless-http';
+
+const app = express();
+
+// Sample data (Replace with your database or service logic)
+const cinemas = {
+  '1001': [
+    { id: 'c5001', title: 'Movie 1', genre: 'Action' },
+    { id: 'c5002', title: 'Movie 2', genre: 'Drama' },
+    { id: 'c5003', title: 'Movie 3', genre: 'Comedy' }
+  ],
+  '1002': [
+    { id: 'c6001', title: 'Movie A', genre: 'Thriller' },
+    { id: 'c6002', title: 'Movie B', genre: 'Sci-Fi' }
+  ]
+};
+
+// GET /cinemas/:cinemaId/movies
+app.get('/cinemas/:cinemaId/movies', (req: Request, res: Response) => {
+  const { cinemaId } = req.params;
+  const movieId = req.query.movieId as string | undefined;
+
+  const cinemaMovies = cinemas[cinemaId];
+
+  if (!cinemaMovies) {
+    return res.status(404).json({ message: 'Cinema not found' });
+  }
+
+  if (movieId) {
+    const movie = cinemaMovies.find((m) => m.id === movieId);
+    if (!movie) {
+      return res.status(404).json({ message: 'Movie not found in this cinema' });
+    }
+    return res.json(movie);
+  }
+
+  // If no movieId is provided, return all movies
+  res.json(cinemaMovies);
+});
+
+// Export the handler for AWS Lambda
+module.exports.handler = serverless(app);
