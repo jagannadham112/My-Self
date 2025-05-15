@@ -2,7 +2,10 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "commonjs",
-    "lib": ["es2020", "dom"],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
     "declaration": true,
     "strict": true,
     "noImplicitAny": true,
@@ -17,11 +20,15 @@
     "inlineSources": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
-    "typeRoots": ["./node_modules/@types"],
-    "resolveJsonModule": true,
-    "outDir": "./dist",
-    "rootDir": "./src"
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
   },
-  "exclude": ["node_modules", "cdk.out", "dist"],
-  "include": ["src/**/*.{ts,tsx}", "shared/*.json"]
+  "exclude": [
+    "node_modules",
+    "cdk.out"
+  ],
+  "include": [
+    "shared/*.json"
+  ],
 }
