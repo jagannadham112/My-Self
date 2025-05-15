@@ -14,12 +14,18 @@ export class ExamStack extends cdk.Stack {
 
     // NOTE: This table declaration is incomplete, and will cause a deployment to fail.
     // The correct code will be provided in the exam question.
-    const table = new dynamodb.Table(this, "CinemasTable", {
+   const table = new dynamodb.Table(this, "CinemasTable", {
       billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
       partitionKey: { name: "cinemaId", type: dynamodb.AttributeType.NUMBER },
+      sortKey: { name: "movieId", type: dynamodb.AttributeType.STRING },
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       tableName: "CinemaTable",
-    });
+ });
+
+    table.addLocalSecondaryIndex({
+      indexName: "periodIx",
+      sortKey: { name: "period", type: dynamodb.AttributeType.STRING },
+ });
 
 
     const question1Fn = new lambdanode.NodejsFunction(this, "QuestionFn", {
